@@ -11,13 +11,6 @@
     "lint": "tsc --noEmit",
     "start": "nodemon --watch src --ext ts --exec 'npm run build'"
   },
-  "keywords": [
-    "azure-functions",
-    "azure",
-    "framework",
-    "dependency-injection",
-    "inversion-of-control"
-  ],
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
