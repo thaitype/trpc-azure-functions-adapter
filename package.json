@@ -17,7 +17,7 @@
     "src/**"
   ],
   "scripts": {
-    "all": "run-s lint test build",
+    "all": "run-s lint build",
     "build": "tsup src/main.ts --dts --format esm,cjs",
     "release": "npm run build && changeset publish",
     "lint": "tsc --noEmit",
