@@ -1,4 +1,4 @@
-import { azureFuncRequestHandler, AzureFuncContextOption } from '../../../src/main';
+import { azureFuncRequestHandler, AzureFuncContextOption } from 'trpc-azure-functions-adapter';
 import { app } from '@azure/functions';
 import { inferAsyncReturnType, initTRPC } from '@trpc/server';
 import { z } from 'zod';
@@ -32,6 +32,7 @@ export const handler = azureFuncRequestHandler({
 });
 
 app.http('trpc', {
+  
   handler: azureFuncRequestHandler({
     router: appRouter,
     createContext,
