@@ -1,7 +1,7 @@
 {
-  "name": "@mild-ts/npm-typescript-boilerplate",
-  "version": "0.0.2",
-  "description": "NPM TypeScript Boilerplate with Changesets CLI & GitHub Actions",
+  "name": "trpc-azure-functions-adapter",
+  "version": "0.0.0",
+  "description": "tRPC Azure Functions Adapter",
   "main": "./dist/main.js",
   "module": "./dist/main.mjs",
   "types": "./dist/main.d.ts",
@@ -32,14 +32,15 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.3",
     "tsup": "^6.6.3",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.2",
+    "zod": "^3.22.4"
   },
   "keywords": [],
   "author": "Thada Wangthammang",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mild-ts/npm-typescript-boilerplate.git"
+    "url": "https://github.com/thaitype/trpc-azure-functions-adapter.git"
   },
   "publishConfig": {
     "access": "public",
@@ -52,5 +53,9 @@
     "require": [
       "esbuild-register"
     ]
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.1",
+    "@trpc/server": "^10.40.0"
   }
 }
