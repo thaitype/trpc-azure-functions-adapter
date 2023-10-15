@@ -1,0 +1,56 @@
+{
+  "name": "@mild-ts/npm-typescript-boilerplate",
+  "version": "0.0.2",
+  "description": "NPM TypeScript Boilerplate with Changesets CLI & GitHub Actions",
+  "main": "./dist/main.js",
+  "module": "./dist/main.mjs",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.mjs",
+      "default": "./dist/main.js"
+    }
+  },
+  "files": [
+    "dist/**",
+    "src/**"
+  ],
+  "scripts": {
+    "all": "run-s lint test build",
+    "build": "tsup src/main.ts --dts --format esm,cjs",
+    "release": "npm run build && changeset publish",
+    "lint": "tsc --noEmit",
+    "test": "ava"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.0",
+    "@types/node": "^18.11.18",
+    "ava": "^5.1.1",
+    "c8": "^7.12.0",
+    "esbuild-register": "^3.4.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.3",
+    "tsup": "^6.6.3",
+    "typescript": "^5.0.2"
+  },
+  "keywords": [],
+  "author": "Thada Wangthammang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mild-ts/npm-typescript-boilerplate.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "esbuild-register"
+    ]
+  }
+}
