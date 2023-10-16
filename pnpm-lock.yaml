@@ -52,15 +52,6 @@ importers:
         specifier: ^3.22.4
         version: 3.22.4
 
-  examples/basic:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.0.1
-        version: 4.0.1
-      trpc-azure-functions-adapter:
-        specifier: workspace:*
-        version: link:../../packages/trpc-azure-functions-adapter
-
   packages/trpc-azure-functions-adapter:
     dependencies:
       '@azure/functions':
