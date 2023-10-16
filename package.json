@@ -17,13 +17,11 @@
     "src/**"
   ],
   "scripts": {
-    "all": "run-s lint build",
-    "build": "tsup src/main.ts --dts --format esm,cjs",
-    "release": "npm run build && changeset publish",
-    "lint": "tsc --noEmit",
-    "test": "ava"
+    "all": "pnpm --filter \"trpc-azure-functions-adapter\" all"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
     "@changesets/cli": "^2.26.0",
     "@types/node": "^18.11.18",
     "ava": "^5.1.1",

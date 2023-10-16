@@ -1,0 +1,36 @@
+{
+  "name": "trpc-azure-functions-adapter",
+  "version": "0.0.1",
+  "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (inversify Extension)",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "scripts": {
+    "all": "run-s  build lint",
+    "build": "tsup src/main.ts --dts --format esm,cjs",
+    "release": "npm run build && changeset publish",
+    "lint": "tsc --noEmit",
+    "test": "ava",
+    "dev": "nodemon --watch src --ext ts --exec 'npm run build'"
+  },
+  "keywords": [
+    "azure-functions",
+    "azure"
+  ],
+  "author": "Thada Wangthammang",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/functions": "^4.0.1",
+    "@trpc/server": "^10.40.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mildronize/nammatham.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.124",
+    "nodemon": "^3.0.1"
+  }
+}
