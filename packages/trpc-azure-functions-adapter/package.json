@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "all": "run-s lint build",
+    "all": "run-s  build lint",
     "build": "tsup src/main.ts --dts --format esm,cjs",
     "release": "npm run build && changeset publish",
     "lint": "tsc --noEmit",
