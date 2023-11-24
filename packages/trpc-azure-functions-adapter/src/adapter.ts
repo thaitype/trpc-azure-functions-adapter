@@ -9,7 +9,7 @@ import {
   HttpResponse as AzureHttpResponse,
 } from '@azure/functions';
 
-export function tRPCOutputToAzureFuncOutput(response: HTTPResponse): HttpResponseInit | AzureHttpResponse {
+export function tRPCOutputToAzureFunctionsOutput(response: HTTPResponse): HttpResponseInit | AzureHttpResponse {
   return {
     body: response.body ?? undefined,
     status: response.status,
@@ -20,17 +20,17 @@ export function tRPCOutputToAzureFuncOutput(response: HTTPResponse): HttpRespons
   };
 }
 
-export type CreateAzureFuncContextOptions = {
+export type CreateAzureFunctionsContextOptions = {
   context: InvocationContext;
   request: AzureHttpRequest;
 };
 
-export type AzureFuncCreateContextFn<TRouter extends AnyRouter> = ({
+export type AzureFunctionsCreateContextFn<TRouter extends AnyRouter> = ({
   context,
   request,
-}: CreateAzureFuncContextOptions) => inferRouterContext<TRouter> | Promise<inferRouterContext<TRouter>>;
+}: CreateAzureFunctionsContextOptions) => inferRouterContext<TRouter> | Promise<inferRouterContext<TRouter>>;
 
-export type AzureFuncOptions<TRouter extends AnyRouter, TRequest> =
+export type AzureFunctionsOptions<TRouter extends AnyRouter, TRequest> =
   | {
       router: TRouter;
       batching?: {
@@ -43,17 +43,17 @@ export type AzureFuncOptions<TRouter extends AnyRouter, TRequest> =
           /**
            * @link https://trpc.io/docs/context
            **/
-          createContext: AzureFuncCreateContextFn<TRouter>;
+          createContext: AzureFunctionsCreateContextFn<TRouter>;
         }
       | {
           /**
            * @link https://trpc.io/docs/context
            **/
-          createContext?: AzureFuncCreateContextFn<TRouter>;
+          createContext?: AzureFunctionsCreateContextFn<TRouter>;
         }
     );
 
-export async function azureFuncContextToHttpRequest(request: AzureHttpRequest): Promise<HTTPRequest> {
+export async function azureFunctionsContextToHttpRequest(request: AzureHttpRequest): Promise<HTTPRequest> {
   const body = await request.text();
   const query = new URLSearchParams();
   for (const [key, value] of Object.entries(request.query ?? {})) {
@@ -98,11 +98,11 @@ export type RequestHandlerReturn = (
   context: InvocationContext
 ) => Promise<HttpResponseInit | AzureHttpResponse>;
 
-export function wrapAzureFuncRequestHandler<TRouter extends AnyRouter>(
-  opts: AzureFuncOptions<TRouter, AzureHttpRequest>
+export function wrapAzureFunctionsRequestHandler<TRouter extends AnyRouter>(
+  opts: AzureFunctionsOptions<TRouter, AzureHttpRequest>
 ): RequestHandlerReturn {
   return async (request, context) => {
-    const req = await azureFuncContextToHttpRequest(request);
+    const req = await azureFunctionsContextToHttpRequest(request);
     const path = urlToPath(request.url);
     const createContext = async function _createContext(): Promise<inferRouterContext<TRouter>> {
       return await opts.createContext?.({ request, context });
@@ -124,11 +124,11 @@ export function wrapAzureFuncRequestHandler<TRouter extends AnyRouter>(
       },
     });
 
-    return tRPCOutputToAzureFuncOutput(response);
+    return tRPCOutputToAzureFunctionsOutput(response);
   };
 }
 
-export type AzureFuncContextOption = {
+export type AzureFunctionsContextOption = {
   context: InvocationContext;
   request: AzureHttpRequest;
 };
