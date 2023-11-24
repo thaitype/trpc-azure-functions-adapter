@@ -5,3 +5,4 @@ attachTRPCwithAzureFunction({
   router: appRouter,
   createContext,
 });
+

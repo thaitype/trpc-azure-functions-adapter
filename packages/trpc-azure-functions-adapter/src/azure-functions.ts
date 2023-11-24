@@ -21,7 +21,8 @@ export function attachTRPCwithAzureFunctionBase<TRouter extends AnyRouter>({
   createContext,
 }: AttachTRPCwithAzureFunctionBaseOption<TRouter>) {
   httpFunction('trpc', {
-    route: '/todo',
+    authLevel: 'anonymous',
+    route: 'trpc/{x:regex(^[^\\/]+$)}',
     methods: ['GET', 'POST'],
     handler: azureFuncRequestHandler({
       router,

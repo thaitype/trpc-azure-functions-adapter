@@ -15,11 +15,13 @@ const t = initTRPC.context<Context>().create();
 const publicProcedure = t.procedure;
 
 export const appRouter = t.router({
-  greet: publicProcedure.input(z.object({ name: z.string() })).query(({ input, ctx }) => {
-    console.log(ctx.request.params);
+  greet: publicProcedure
+    // .input(z.object({ name: z.string() }))
+    .query(({ input, ctx }) => {
+      console.log(ctx.request.params);
 
-    return `Greetings, ${input.name}.`;
-  }),
+      return `Greetings, `;
+    }),
 });
 
 export type AppRouter = typeof appRouter;
