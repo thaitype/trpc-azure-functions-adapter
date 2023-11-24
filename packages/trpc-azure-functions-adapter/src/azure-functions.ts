@@ -1,30 +1,30 @@
 import { app, HttpRequest as AzureHttpRequest } from '@azure/functions';
 import { AnyRouter } from '@trpc/server';
-import { AzureFuncOptions, azureFuncRequestHandler } from './adapter';
+import { AzureFuncOptions, wrapAzureFuncRequestHandler } from './adapter';
 
-export function attachTRPCwithAzureFunction<TRouter extends AnyRouter>(
+export function azureFunctionsRequestHandler<TRouter extends AnyRouter>(
   option: AzureFuncOptions<TRouter, AzureHttpRequest>
 ) {
-  return attachTRPCwithAzureFunctionBase({
+  return azureFunctionsRequestHandlerBase({
     httpFunction: app.http,
     ...option,
   });
 }
 
-export type AttachTRPCwithAzureFunctionBaseOption<TRouter extends AnyRouter> = {
+export type AzureFunctionsRequestHandlerBaseOption<TRouter extends AnyRouter> = {
   httpFunction: typeof app.http;
 } & AzureFuncOptions<TRouter, AzureHttpRequest>;
 
-export function attachTRPCwithAzureFunctionBase<TRouter extends AnyRouter>({
+export function azureFunctionsRequestHandlerBase<TRouter extends AnyRouter>({
   httpFunction,
   router,
   createContext,
-}: AttachTRPCwithAzureFunctionBaseOption<TRouter>) {
+}: AzureFunctionsRequestHandlerBaseOption<TRouter>) {
   httpFunction('trpc', {
     authLevel: 'anonymous',
     route: 'trpc/{x:regex(^[^\\/]+$)}',
     methods: ['GET', 'POST'],
-    handler: azureFuncRequestHandler({
+    handler: wrapAzureFuncRequestHandler({
       router,
       createContext,
     }),

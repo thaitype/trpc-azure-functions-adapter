@@ -52,10 +52,10 @@ export type AppRouter = typeof appRouter;
 ```tsx
 // filename: `src/functions/trpc.ts`
 
-import { attachTRPCwithAzureFunction } from 'trpc-azure-functions-adapter';
+import { azureFunctionsRequestHandler } from 'trpc-azure-functions-adapter';
 import { appRouter, createContext } from '../router';
 
-attachTRPCwithAzureFunction({
+azureFunctionsRequestHandler({
   router: appRouter,
   createContext,
 });
@@ -79,7 +79,5 @@ Contributions are welcome!
 
 If you encounter any issues or have questions, please open an issue on the [Issues](https://github.com/thaitype/trpc-azure-functions-adapter/issues) tab.
 
-
-
-Other Option:
+## Other Option:
 - https://serverless-adapter.viniciusl.com.br/docs/main/adapters/azure/http-trigger-v4

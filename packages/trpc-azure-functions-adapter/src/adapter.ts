@@ -98,12 +98,12 @@ export type RequestHandlerReturn = (
   context: InvocationContext
 ) => Promise<HttpResponseInit | AzureHttpResponse>;
 
-export function azureFuncRequestHandler<TRouter extends AnyRouter>(
+export function wrapAzureFuncRequestHandler<TRouter extends AnyRouter>(
   opts: AzureFuncOptions<TRouter, AzureHttpRequest>
 ): RequestHandlerReturn {
   return async (request, context) => {
-    const req = await azureFuncContextToHttpRequest(request); //lambdaEventToHTTPRequest(event);  Note: event as APIGatewayEvent
-    const path = urlToPath(request.url); // getPath(event); Note: event as APIGatewayEvent
+    const req = await azureFuncContextToHttpRequest(request);
+    const path = urlToPath(request.url);
     const createContext = async function _createContext(): Promise<inferRouterContext<TRouter>> {
       return await opts.createContext?.({ request, context });
     };

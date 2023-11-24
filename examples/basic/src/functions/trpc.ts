@@ -1,8 +1,7 @@
-import { attachTRPCwithAzureFunction } from 'trpc-azure-functions-adapter';
+import { azureFunctionsRequestHandler } from 'trpc-azure-functions-adapter';
 import { appRouter, createContext } from '../router';
 
-attachTRPCwithAzureFunction({
+azureFunctionsRequestHandler({
   router: appRouter,
   createContext,
 });
-
