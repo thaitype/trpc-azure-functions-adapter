@@ -1,4 +1,81 @@
-# tRPC Azure Functions Adapter
+# tRPC Adapter for Azure Functions v4
+
+This project provides an adapter for integrating tRPC (TypeScript RPC) with Azure Functions v4. The adapter simplifies the process of setting up type-safe and efficient APIs using TypeScript and tRPC within the Azure Functions environment.
+
+## Installation
+
+```bash
+npm install trpc-azure-functions-adapter
+```
+
+## Usage
+
+### 1. Create a `router.ts` file
+
+```tsx
+// filename: `src/router.ts`
+
+import { AzureFuncContextOption } from 'trpc-azure-functions-adapter';
+import { inferAsyncReturnType, initTRPC } from '@trpc/server';
+
+export function createContext({ context, request }: AzureFuncContextOption) {
+  return {
+    context,
+    request,
+  };
+}
+
+type Context = inferAsyncReturnType<typeof createContext>;
+
+const t = initTRPC.context<Context>().create();
+
+const publicProcedure = t.procedure;
+
+export const appRouter = t.router({
+  greet: publicProcedure
+    .query(({ input, ctx }) => {
+      console.log(ctx.request.params);
+
+      return `Greetings, `;
+    }),
+});
+
+export type AppRouter = typeof appRouter;
+```
+
+### 2. Create an Azure Functions entry file, e.g., `trpc.ts`
+
+```tsx
+// filename: `src/functions/trpc.ts`
+
+import { attachTRPCwithAzureFunction } from 'trpc-azure-functions-adapter';
+import { appRouter, createContext } from '../router';
+
+attachTRPCwithAzureFunction({
+  router: appRouter,
+  createContext,
+});
+
+```
+
+## License
+
+This project is licensed under the MIT License
+
+## Acknowledgments
+
+- [tRPC](https://trpc.io/) - A powerful TypeScript RPC framework.
+- [Azure Functions](https://azure.microsoft.com/en-us/products/functions/) - Serverless compute service in Azure.
+
+## Contributing
+
+Contributions are welcome!
+
+## Issues
+
+If you encounter any issues or have questions, please open an issue on the [Issues](https://github.com/thaitype/trpc-azure-functions-adapter/issues) tab.
+
+
 
 Other Option:
 - https://serverless-adapter.viniciusl.com.br/docs/main/adapters/azure/http-trigger-v4

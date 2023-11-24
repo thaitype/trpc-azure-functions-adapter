@@ -1,6 +1,5 @@
 import { AzureFuncContextOption } from 'trpc-azure-functions-adapter';
 import { inferAsyncReturnType, initTRPC } from '@trpc/server';
-import { z } from 'zod';
 
 export function createContext({ context, request }: AzureFuncContextOption) {
   return {
@@ -16,7 +15,6 @@ const publicProcedure = t.procedure;
 
 export const appRouter = t.router({
   greet: publicProcedure
-    // .input(z.object({ name: z.string() }))
     .query(({ input, ctx }) => {
       console.log(ctx.request.params);
 
