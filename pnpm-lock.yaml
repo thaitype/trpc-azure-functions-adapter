@@ -36,6 +36,9 @@ importers:
       esbuild-register:
         specifier: ^3.4.2
         version: 3.4.2
+      nodemon:
+        specifier: ^3.0.1
+        version: 3.0.1
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5

@@ -2,13 +2,15 @@
   "name": "@example/basic",
   "version": "2.0.0",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (inversify Extension)",
-  "main": "dist/main.js",
-  "types": "dist/main.d.ts",
+  "main": "dist/src/functions/*.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build",
-    "build": "tsup src/main.ts --dts",
-    "start": "nodemon --watch src --ext ts --exec 'npm run build'"
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "build:watch": "tsc -w",
+    "start": "func start",
+    "start:watch": "func start -w",
+    "dev": "run-s build start",
+    "dev:watch": "run-p build:watch start:watch"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
