@@ -68,8 +68,8 @@ This project is licensed under the MIT License
 
 ## Acknowledgments
 
-- [tRPC](https://trpc.io/) - A powerful TypeScript RPC framework.
-- [Azure Functions](https://azure.microsoft.com/en-us/products/functions/) - Serverless compute service in Azure.
+- [Official tRPC Adatper for AWS Lambda](https://trpc.io/docs/server/adapters/aws-lambda)
+- [Azure Function v3 Pull Request to tRPC Repository](https://github.com/trpc/trpc/pull/3452)
 
 ## Contributing
 
