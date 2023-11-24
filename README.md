@@ -1,5 +1,9 @@
 # tRPC Adapter for Azure Functions v4
 
+[![CI](https://github.com/thaitype/trpc-azure-functions-adapter/actions/workflows/main.yml/badge.svg)](https://github.com/thaitype/trpc-azure-functions-adapter/actions/workflows/main.yml)
+
+> In Development process, done for Proof of concept considering adding feature for production use
+
 This project provides an adapter for integrating tRPC (TypeScript RPC) with Azure Functions v4. The adapter simplifies the process of setting up type-safe and efficient APIs using TypeScript and tRPC within the Azure Functions environment.
 
 ## Installation
