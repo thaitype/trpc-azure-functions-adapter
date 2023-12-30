@@ -1,6 +1,6 @@
 {
   "name": "@example/basic",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (inversify Extension)",
   "main": "dist/src/functions/*.js",
   "scripts": {
