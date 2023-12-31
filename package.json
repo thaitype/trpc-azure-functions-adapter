@@ -1,6 +1,6 @@
 {
   "name": "trpc-azure-functions-adapter",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "tRPC Azure Functions Adapter",
   "main": "./dist/main.js",
   "module": "./dist/main.mjs",
