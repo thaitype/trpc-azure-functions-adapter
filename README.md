@@ -1,6 +1,8 @@
 # tRPC Adapter for Azure Functions v4
 
-[![CI](https://github.com/thaitype/trpc-azure-functions-adapter/actions/workflows/main.yml/badge.svg)](https://github.com/thaitype/trpc-azure-functions-adapter/actions/workflows/main.yml)
+[![CI](https://github.com/thaitype/trpc-azure-functions-adapter/actions/workflows/main.yml/badge.svg)](https://github.com/thaitype/trpc-azure-functions-adapter/actions/workflows/main.yml) 
+[![npm version](https://img.shields.io/npm/v/trpc-azure-functions-adapter)](https://www.npmjs.com/package/trpc-azure-functions-adapter) 
+[![npm download](https://img.shields.io/npm/dt/trpc-azure-functions-adapter)](https://www.npmjs.com/package/trpc-azure-functions-adapter)
 
 > In Development process, done for Proof of concept considering adding feature for production use
 

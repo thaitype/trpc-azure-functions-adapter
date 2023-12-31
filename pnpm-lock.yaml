@@ -67,8 +67,8 @@ importers:
   packages/trpc-azure-functions-adapter:
     dependencies:
       '@azure/functions':
-        specifier: ^4.0.1
-        version: 4.0.1
+        specifier: ^4.1.0
+        version: 4.1.0
       '@trpc/server':
         specifier: ^10.40.0
         version: 10.40.0
@@ -84,6 +84,14 @@ packages:
 
   /@azure/functions@4.0.1:
     resolution: {integrity: sha512-Ol38b4XOlu6IDkLnO91HaYeo2utMixG0LIA1NR9Qehu17U/cGjNx+bAcOEdNlSJWNYh5ChhzjxA/uFB5dQJtmg==}
+    engines: {node: '>=18.0'}
+    dependencies:
+      long: 4.0.0
+      undici: 5.26.3
+    dev: false
+
+  /@azure/functions@4.1.0:
+    resolution: {integrity: sha512-45WDaJZiTmvaIOPSdWWKL5NgzgUWsNzXDNlF7oCMLS43lE602qG7XE6Hdg9ewPWBj55URHRU7UWTHk4uDVqBGg==}
     engines: {node: '>=18.0'}
     dependencies:
       long: 4.0.0
