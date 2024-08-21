@@ -3,7 +3,7 @@
   "version": "2.0.1",
   "private": true,
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (inversify Extension)",
-  "main": "dist/src/functions/*.js",
+  "main": "dist/src/main.js",
   "scripts": {
     "build": "tsc",
     "lint": "tsc --noEmit",
@@ -16,8 +16,11 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@azure/functions": "^4.0.1",
-    "trpc-azure-functions-adapter": "workspace:*"
+    "@azure/functions": "^4.5.0",
+    "@trpc/server": "^10.40.0",
+    "@trpc/client": "^10.40.0",
+    "trpc-azure-functions-adapter": "workspace:*",
+    "zod": "^3.22.4"
   },
   "repository": {
     "type": "git",

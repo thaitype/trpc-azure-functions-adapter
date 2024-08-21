@@ -1,22 +1,25 @@
-import { AnyRouter, TRPCError, inferRouterContext } from '@trpc/server';
-import { HTTPHeaders, HTTPResponse, ResponseMetaFn } from '@trpc/server/dist/http/internals/types';
-import { OnErrorFunction } from '@trpc/server/dist/internals/types';
-import { HTTPRequest, resolveHTTPResponse } from '@trpc/server/http';
+import { TRPCError, inferRouterContext, AnyTRPCRouter} from '@trpc/server';
+
+// import { HTTPHeaders, HTTPResponse, ResponseMetaFn } from '@trpc/server/dist/http/internals/types'; 
+// import { OnErrorFunction } from '@trpc/server/dist/internals/types';
+// import { HTTPRequest, resolveHTTPResponse } from '@trpc/server/http';
+import type { HTTPBaseHandlerOptions } from '@trpc/server/http';
+
+type TrpcRequest = Request;
+type TrpcResponse = Response;
+
 import {
   InvocationContext,
   HttpRequest as AzureHttpRequest,
-  HttpResponseInit,
+  HttpResponseInit as AzureResponseInit,
   HttpResponse as AzureHttpResponse,
 } from '@azure/functions';
 
-export function tRPCOutputToAzureFunctionsOutput(response: HTTPResponse): HttpResponseInit | AzureHttpResponse {
+export async function tRPCOutputToAzureFunctionsOutput(response: AzureHttpResponse): Promise<AzureResponseInit> {
   return {
-    body: response.body ?? undefined,
     status: response.status,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(response.headers ?? {}),
-    },
+    headers: Object.fromEntries(response.headers.entries()),
+    body: await response.arrayBuffer(),
   };
 }
 
@@ -25,33 +28,42 @@ export type CreateAzureFunctionsContextOptions = {
   request: AzureHttpRequest;
 };
 
-export type AzureFunctionsCreateContextFn<TRouter extends AnyRouter> = ({
+export type AzureFunctionsCreateContextFn<TRouter extends AnyTRPCRouter> = ({
   context,
   request,
 }: CreateAzureFunctionsContextOptions) => inferRouterContext<TRouter> | Promise<inferRouterContext<TRouter>>;
 
-export type AzureFunctionsOptions<TRouter extends AnyRouter, TRequest> =
-  | {
-    router: TRouter;
-    batching?: {
-      enabled: boolean;
-    };
-    onError?: OnErrorFunction<TRouter, TRequest>;
-    responseMeta?: ResponseMetaFn<TRouter>;
-  } & (
-    | {
-      /**
-       * @link https://trpc.io/docs/context
-       **/
-      createContext: AzureFunctionsCreateContextFn<TRouter>;
-    }
-    | {
-      /**
-       * @link https://trpc.io/docs/context
-       **/
-      createContext?: AzureFunctionsCreateContextFn<TRouter>;
-    }
-  );
+
+
+export type AzureFunctionsOptions<
+  TRouter extends AnyTRPCRouter,
+  TRequest
+> = HTTPBaseHandlerOptions<TRouter, TRequest> & {
+  createContext?: AzureFunctionsCreateContextFn<TRouter>;
+};
+
+// export type AzureFunctionsOptions<TRouter extends AnyRouter, TRequest> =
+//   | {
+//       router: TRouter;
+//       batching?: {
+//         enabled: boolean;
+//       };
+//       onError?: OnErrorFunction<TRouter, TRequest>;
+//       responseMeta?: ResponseMetaFn<TRouter>;
+//     } & (
+//       | {
+//           /**
+//            * @link https://trpc.io/docs/context
+//            **/
+//           createContext: AzureFunctionsCreateContextFn<TRouter>;
+//         }
+//       | {
+//           /**
+//            * @link https://trpc.io/docs/context
+//            **/
+//           createContext?: AzureFunctionsCreateContextFn<TRouter>;
+//         }
+//     );
 
 export async function azureFunctionsContextToHttpRequest(request: AzureHttpRequest): Promise<HTTPRequest> {
   const body = await request.text();
@@ -63,7 +75,7 @@ export async function azureFunctionsContextToHttpRequest(request: AzureHttpReque
       console.log(`Converting Query: ${key} $$$ ${value}!`);
     }
   }
-
+  
   const headers: HTTPHeaders = {};
   for (const [key, value] of request.headers.entries()) {
     if (typeof value !== 'undefined') {
@@ -106,14 +118,13 @@ export function createAzureFunctionsHandler<TRouter extends AnyRouter>(
   return async (request, context) => {
     const req = await azureFunctionsContextToHttpRequest(request);
     const path = urlToPath(request.url);
+    console.log(`Request: ${request.url} ${req.method} ${path} (${req.query.entries().next().value})`);
     const createContext = async function _createContext(): Promise<inferRouterContext<TRouter>> {
       return await opts.createContext?.({ request, context });
     };
 
     const response = await resolveHTTPResponse({
-      router: opts.router,
-      batching: opts.batching,
-      responseMeta: opts?.responseMeta,
+      ...opts,
       createContext,
       req: req,
       path: path,
