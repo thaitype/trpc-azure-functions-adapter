@@ -5,11 +5,9 @@ import { app } from '@azure/functions';
 app.http('trpc', {
   methods: ['GET', 'POST'],
   authLevel: 'anonymous',
-  route: 'trpc/{x:regex(^[^\\/]+$)}',
+  route: 'trpc/{*proxy}',
   handler: createAzureFunctionsHandler({
     router: appRouter,
     createContext,
   }),
 });
-
-

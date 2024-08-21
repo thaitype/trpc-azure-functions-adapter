@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/trpc-azure-functions-adapter)](https://www.npmjs.com/package/trpc-azure-functions-adapter) 
 [![npm download](https://img.shields.io/npm/dt/trpc-azure-functions-adapter)](https://www.npmjs.com/package/trpc-azure-functions-adapter)
 
-> In Development process, done for Proof of concept considering adding feature for production use
+> Only Support tRPC 10
 
 This project provides an adapter for integrating tRPC (TypeScript RPC) with Azure Functions v4. The adapter simplifies the process of setting up type-safe and efficient APIs using TypeScript and tRPC within the Azure Functions environment.
 
@@ -16,10 +16,10 @@ npm install trpc-azure-functions-adapter
 
 ## Usage
 
-### 1. Create a `router.ts` file
+### 1. Create a `trpc.ts` file
 
 ```tsx
-// filename: `src/router.ts`
+// filename: `src/trpc.ts`
 
 import { AzureFuncContextOption } from 'trpc-azure-functions-adapter';
 import { inferAsyncReturnType, initTRPC } from '@trpc/server';
@@ -31,9 +31,7 @@ export function createContext({ context, request }: AzureFuncContextOption) {
   };
 }
 
-type Context = inferAsyncReturnType<typeof createContext>;
-
-const t = initTRPC.context<Context>().create();
+const t = initTRPC.context<typeof createContext>().create();
 
 const publicProcedure = t.procedure;
 
@@ -49,19 +47,24 @@ export const appRouter = t.router({
 export type AppRouter = typeof appRouter;
 ```
 
-### 2. Create an Azure Functions entry file, e.g., `trpc.ts`
+### 2. Create an Azure Functions entry file, e.g., `main.ts`
 
 ```tsx
-// filename: `src/functions/trpc.ts`
+// filename: `src/main.ts`
 
-import { azureFunctionsRequestHandler } from 'trpc-azure-functions-adapter';
-import { appRouter, createContext } from '../router';
+import { createAzureFunctionsHandler } from 'trpc-azure-functions-adapter';
+import { appRouter, createContext } from './trpc';
+import { app } from '@azure/functions';
 
-azureFunctionsRequestHandler({
-  router: appRouter,
-  createContext,
+app.http('trpc', {
+  methods: ['GET', 'POST'],
+  authLevel: 'anonymous',
+  route: 'trpc/{*proxy}',
+  handler: createAzureFunctionsHandler({
+    router: appRouter,
+    createContext,
+  }),
 });
-
 ```
 
 ## License

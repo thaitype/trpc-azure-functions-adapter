@@ -1,4 +1,4 @@
-import { AzureFunctionsContextOption } from 'trpc-azure-functions-adapter';
+import type { AzureFunctionsContextOption } from 'trpc-azure-functions-adapter';
 import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
 
