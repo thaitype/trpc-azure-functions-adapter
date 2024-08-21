@@ -22,9 +22,6 @@
   ],
   "author": "Thada Wangthammang",
   "license": "MIT",
-  "dependencies": {
-    "@azure/functions": "^4.1.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/mildronize/nammatham.git"
@@ -33,7 +30,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.124",
+    "@azure/functions": "^4.5.0",
     "nodemon": "^3.0.1"
   }
 }

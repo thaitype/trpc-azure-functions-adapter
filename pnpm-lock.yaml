@@ -73,14 +73,10 @@ importers:
         version: 3.23.8
 
   packages/trpc-azure-functions-adapter:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.5.0
     devDependencies:
-      '@types/aws-lambda':
-        specifier: ^8.10.124
-        version: 8.10.143
+      '@azure/functions':
+        specifier: ^4.5.0
+        version: 4.5.0
       nodemon:
         specifier: ^3.0.1
         version: 3.1.4
@@ -354,9 +350,6 @@ packages:
 
   '@trpc/server@10.45.2':
     resolution: {integrity: sha512-wOrSThNNE4HUnuhJG6PfDRp4L2009KDVxsd+2VYH8ro6o/7/jwYZ8Uu5j+VaW+mOmc8EHerHzGcdbGNQSAUPgg==}
-
-  '@types/aws-lambda@8.10.143':
-    resolution: {integrity: sha512-u5vzlcR14ge/4pMTTMDQr3MF0wEe38B2F9o84uC4F43vN5DGTy63npRrB6jQhyt+C0lGv4ZfiRcRkqJoZuPnmg==}
 
   '@types/istanbul-lib-coverage@2.0.6':
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
@@ -2234,8 +2227,6 @@ snapshots:
       '@trpc/server': 10.45.2
 
   '@trpc/server@10.45.2': {}
-
-  '@types/aws-lambda@8.10.143': {}
 
   '@types/istanbul-lib-coverage@2.0.6': {}
 
