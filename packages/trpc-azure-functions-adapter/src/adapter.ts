@@ -32,38 +32,38 @@ export type AzureFunctionsCreateContextFn<TRouter extends AnyRouter> = ({
 
 export type AzureFunctionsOptions<TRouter extends AnyRouter, TRequest> =
   | {
-      router: TRouter;
-      batching?: {
-        enabled: boolean;
-      };
-      onError?: OnErrorFunction<TRouter, TRequest>;
-      responseMeta?: ResponseMetaFn<TRouter>;
-    } & (
-      | {
-          /**
-           * @link https://trpc.io/docs/context
-           **/
-          createContext: AzureFunctionsCreateContextFn<TRouter>;
-        }
-      | {
-          /**
-           * @link https://trpc.io/docs/context
-           **/
-          createContext?: AzureFunctionsCreateContextFn<TRouter>;
-        }
-    );
+    router: TRouter;
+    batching?: {
+      enabled: boolean;
+    };
+    onError?: OnErrorFunction<TRouter, TRequest>;
+    responseMeta?: ResponseMetaFn<TRouter>;
+  } & (
+    | {
+      /**
+       * @link https://trpc.io/docs/context
+       **/
+      createContext: AzureFunctionsCreateContextFn<TRouter>;
+    }
+    | {
+      /**
+       * @link https://trpc.io/docs/context
+       **/
+      createContext?: AzureFunctionsCreateContextFn<TRouter>;
+    }
+  );
 
 export async function azureFunctionsContextToHttpRequest(request: AzureHttpRequest): Promise<HTTPRequest> {
   const body = await request.text();
   const query = new URLSearchParams();
-  for (const [key, value] of Object.entries(request.query ?? {})) {
+  for (const [key, value] of request.query.entries()) {
     if (typeof value !== 'undefined') {
       query.append(key, value);
     }
   }
 
   const headers: HTTPHeaders = {};
-  for (const [key, value] of Object.entries(request.headers ?? {})) {
+  for (const [key, value] of request.headers.entries()) {
     if (typeof value !== 'undefined') {
       headers[key] = value;
     }
@@ -98,7 +98,7 @@ export type RequestHandlerReturn = (
   context: InvocationContext
 ) => Promise<HttpResponseInit | AzureHttpResponse>;
 
-export function wrapAzureFunctionsRequestHandler<TRouter extends AnyRouter>(
+export function createAzureFunctionsHandler<TRouter extends AnyRouter>(
   opts: AzureFunctionsOptions<TRouter, AzureHttpRequest>
 ): RequestHandlerReturn {
   return async (request, context) => {

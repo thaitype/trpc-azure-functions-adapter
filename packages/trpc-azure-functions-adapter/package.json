@@ -23,8 +23,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@azure/functions": "^4.1.0",
-    "@trpc/server": "^10.40.0"
+    "@azure/functions": "^4.1.0"
   },
   "repository": {
     "type": "git",
