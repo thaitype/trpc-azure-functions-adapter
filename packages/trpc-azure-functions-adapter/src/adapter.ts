@@ -59,7 +59,6 @@ export async function azureFunctionsContextToHttpRequest(request: AzureHttpReque
   for (const [key, value] of request.query.entries()) {
     if (typeof value !== 'undefined') {
       query.append(key, value);
-      console.log(`Converting Query: ${key}=${value}`);
     }
   }
 
@@ -67,13 +66,12 @@ export async function azureFunctionsContextToHttpRequest(request: AzureHttpReque
   for (const [key, value] of request.headers.entries()) {
     if (typeof value !== 'undefined') {
       headers[key] = value;
-      console.log(`Converting Header: ${key}=${value}`);
     }
   }
 
   return {
     method: request.method || 'get',
-    query: request.query as any,
+    query,
     headers,
     body,
   };

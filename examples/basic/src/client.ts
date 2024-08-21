@@ -12,12 +12,23 @@ async function main() {
 
   await sleep();
 
-  // const greet = await proxy.greet.query();
-  const greet = await proxy.greet.query({ text: 'xxxx' });
-  console.log('created post', greet);
+  // parallel queries
+  await Promise.all([
+    //
+    proxy.hello.query(),
+    proxy.hello.query('client'),
+  ]);
   await sleep();
 
+  const postCreate = await proxy.post.createPost.mutate({
+    title: 'hello client',
+  });
+  console.log('created post', postCreate.title);
+  await sleep();
 
+  const postList = await proxy.post.listPosts.query();
+  console.log('has posts', postList, 'first:', postList[0].title);
+  await sleep();
 
   console.log('👌 should be a clean exit if everything is working right');
 }
