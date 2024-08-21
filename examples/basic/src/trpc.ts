@@ -17,16 +17,13 @@ const publicProcedure = t.procedure;
 
 export const appRouter = t.router({
   greet: publicProcedure
-  // .input(z.object({
-  //   text: z.string(),
-  // }))
-  .query(({  ctx }) => {
-    
-    // console.log(input.text);
-    const input = { text: 'client' };
+    .input(z.object({
+      text: z.string(),
+    }))
+    .query(({ input, ctx }) => {
 
-    return `Greetings, ${input.text} `;
-  }),
+      return `Greetings, ${input.text} `;
+    }),
 });
 
 export type AppRouter = typeof appRouter;

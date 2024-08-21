@@ -56,11 +56,10 @@ export type AzureFunctionsOptions<TRouter extends AnyRouter, TRequest> =
 export async function azureFunctionsContextToHttpRequest(request: AzureHttpRequest): Promise<HTTPRequest> {
   const body = await request.text();
   const query = new URLSearchParams();
-  console.log(`Converting Query 111`);
   for (const [key, value] of request.query.entries()) {
     if (typeof value !== 'undefined') {
       query.append(key, value);
-      console.log(`Converting Query: ${key} $$$ ${value}!`);
+      console.log(`Converting Query: ${key}=${value}`);
     }
   }
 
@@ -68,6 +67,7 @@ export async function azureFunctionsContextToHttpRequest(request: AzureHttpReque
   for (const [key, value] of request.headers.entries()) {
     if (typeof value !== 'undefined') {
       headers[key] = value;
+      console.log(`Converting Header: ${key}=${value}`);
     }
   }
 

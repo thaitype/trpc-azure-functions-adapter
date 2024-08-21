@@ -12,8 +12,8 @@ async function main() {
 
   await sleep();
 
-  const greet = await proxy.greet.query();
-  // const greet = await proxy.greet.query({ text: 'client' });
+  // const greet = await proxy.greet.query();
+  const greet = await proxy.greet.query({ text: 'xxxx' });
   console.log('created post', greet);
   await sleep();
 
