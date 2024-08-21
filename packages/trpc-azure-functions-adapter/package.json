@@ -1,6 +1,6 @@
 {
   "name": "trpc-azure-functions-adapter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (inversify Extension)",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
